@@ -21,6 +21,12 @@ class HeroesRepository {
         return flowOf(heroes)
     }
 
+    fun getHeroById(heroId: Long): Hero{
+        return heroes.first{
+            it.id == heroId
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: HeroesRepository? = null

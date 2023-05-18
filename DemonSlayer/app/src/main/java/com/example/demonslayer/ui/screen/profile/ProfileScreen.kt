@@ -48,7 +48,7 @@ fun ProfileScreen(
                     textAlign = TextAlign.Center,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    style = MaterialTheme.typography.titleMedium
                 )
             },
             colors = TopAppBarDefaults.smallTopAppBarColors(MaterialTheme.colorScheme.primary)

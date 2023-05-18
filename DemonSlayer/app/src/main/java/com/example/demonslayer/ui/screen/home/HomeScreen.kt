@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -14,7 +13,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +21,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -37,6 +34,7 @@ import com.example.demonslayer.model.Hero
 import com.example.demonslayer.ui.ViewModelFactory
 import com.example.demonslayer.ui.common.UiState
 import com.example.demonslayer.ui.components.HeroListItem
+import com.example.demonslayer.ui.components.LoadingScreen
 import com.example.demonslayer.ui.theme.DemonSlayerTheme
 
 @Composable
@@ -45,7 +43,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository())
     ),
-    navigateToDetail: (String) -> Unit,
+    navigateToDetail: (Long) -> Unit,
 ) {
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -56,7 +54,7 @@ fun HomeScreen(
 
             is UiState.Success -> {
                 Column {
-                    Box(modifier = Modifier.background(MaterialTheme.colorScheme.primary)){
+                    Box(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
                         SearchBar(query = "", onQueryChange = {})
                     }
                     HomeContent(
@@ -76,30 +74,22 @@ fun HomeScreen(
 fun HomeContent(
     heroes: List<Hero>,
     modifier: Modifier = Modifier,
-    navigateToDetail: (String) -> Unit,
+    navigateToDetail: (Long) -> Unit,
 ) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = 80.dp),
         modifier = modifier
     ) {
         items(heroes) { data ->
-            HeroListItem(name = data.name, photoUrl = data.image,
-                modifier = Modifier.clickable {
-                    navigateToDetail(data.name)
-                })
+            HeroListItem(
+                name = data.name,
+                photoUrl = data.image,
+                modifier = Modifier.clickable(onClick = { navigateToDetail(data.id) })
+            )
         }
     }
 }
 
-@Composable
-fun LoadingScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -107,7 +97,7 @@ fun SearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     TextField(
         value = query,
         onValueChange = onQueryChange,

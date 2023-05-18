@@ -5,8 +5,15 @@
     <string name="menu_profile">Profile</string>
     <string name="search_hero">Search…</string>
 
+    <string name="height">height: %s</string>
+    <string name="weight">weight: %s</string>
+    <string name="gender">gender: %s</string>
     <string name="home_page">home_page</string>
     <string name="favorite_page">favorite_page</string>
     <string name="about_page">about_page</string>
     <string name="my_profile">My Profile</string>
+    <string name="back">Back</string>
+    <string name="add_favorite">Add to Favorite</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </string>
 </resources>

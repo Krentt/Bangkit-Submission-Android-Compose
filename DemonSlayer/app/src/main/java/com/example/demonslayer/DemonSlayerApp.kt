@@ -21,12 +21,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.demonslayer.navigation.Navigationitem
 import com.example.demonslayer.navigation.Screen
+import com.example.demonslayer.ui.screen.detail.DetailScreen
 import com.example.demonslayer.ui.screen.home.HomeScreen
 import com.example.demonslayer.ui.screen.profile.ProfileScreen
 import com.example.demonslayer.ui.theme.DemonSlayerTheme
@@ -43,19 +46,34 @@ fun DemonSlayerApp(
 
     Scaffold(
         bottomBar = {
-            BottomBar(navController = navController)
+            if (currentRoute != Screen.DetailHero.route){
+                BottomBar(navController = navController)
+            }
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding),
         ) {
             composable(Screen.Home.route) {
-                HomeScreen(navigateToDetail = {})
+                HomeScreen(
+                    navigateToDetail = { heroId ->
+                        navController.navigate(Screen.DetailHero.createRoute(heroId))
+                    })
             }
-            composable(Screen.Profile.route){
+            composable(Screen.Profile.route) {
                 ProfileScreen()
+            }
+            composable(
+                route = Screen.DetailHero.route,
+                arguments = listOf(navArgument("heroId") { type = NavType.LongType }),
+            ) {
+                val id = it.arguments?.getLong("heroId") ?: -1L
+                DetailScreen(
+                    heroId = id,
+                    navigateBack = { navController.navigateUp() }
+                )
             }
 
         }

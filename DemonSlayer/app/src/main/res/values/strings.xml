@@ -12,8 +12,11 @@
     <string name="favorite_page">favorite_page</string>
     <string name="about_page">about_page</string>
     <string name="my_profile">My Profile</string>
+    <string name="my_favorite">My Favorites</string>
     <string name="back">Back</string>
+    <string name="empty">There\'s no Favorite Hero!</string>
     <string name="add_favorite">Add to Favorite</string>
+    <string name="remove_favorite">Remove from Favorite</string>
 
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </string>
 </resources>

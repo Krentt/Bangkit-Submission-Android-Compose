@@ -30,6 +30,7 @@ import androidx.navigation.navArgument
 import com.example.demonslayer.navigation.Navigationitem
 import com.example.demonslayer.navigation.Screen
 import com.example.demonslayer.ui.screen.detail.DetailScreen
+import com.example.demonslayer.ui.screen.favorite.FavoriteScreen
 import com.example.demonslayer.ui.screen.home.HomeScreen
 import com.example.demonslayer.ui.screen.profile.ProfileScreen
 import com.example.demonslayer.ui.theme.DemonSlayerTheme
@@ -72,8 +73,23 @@ fun DemonSlayerApp(
                 val id = it.arguments?.getLong("heroId") ?: -1L
                 DetailScreen(
                     heroId = id,
-                    navigateBack = { navController.navigateUp() }
+                    navigateBack = { navController.navigateUp() },
+                    navigateToFavorite = {
+                        navController.popBackStack()
+                        navController.navigate(Screen.Favorite.route){
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                 )
+            }
+            composable(Screen.Favorite.route){
+                FavoriteScreen(navigateToDetail = { heroId ->
+                    navController.navigate(Screen.DetailHero.createRoute(heroId))
+                })
             }
 
         }

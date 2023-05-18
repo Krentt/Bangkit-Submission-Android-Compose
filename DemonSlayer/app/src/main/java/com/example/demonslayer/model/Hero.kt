@@ -6,5 +6,6 @@ data class Hero(
     val name: String,
     val height: String,
     val weight: String,
-    val gender: String
+    val gender: String,
+    val favorite: Boolean
 )

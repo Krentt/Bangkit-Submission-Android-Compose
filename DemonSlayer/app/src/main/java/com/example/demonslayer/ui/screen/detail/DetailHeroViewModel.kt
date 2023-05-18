@@ -27,4 +27,10 @@ class DetailHeroViewModel(
             )
         }
     }
+
+    fun updateFavorite(hero: Hero){
+        viewModelScope.launch {
+            repository.updateFavorite(hero.id)
+        }
+    }
 }

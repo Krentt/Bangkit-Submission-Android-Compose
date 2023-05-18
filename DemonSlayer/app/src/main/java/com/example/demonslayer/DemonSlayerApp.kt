@@ -1,5 +1,7 @@
 package com.example.demonslayer
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -26,8 +28,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.demonslayer.navigation.Navigationitem
 import com.example.demonslayer.navigation.Screen
 import com.example.demonslayer.ui.screen.home.HomeScreen
+import com.example.demonslayer.ui.screen.profile.ProfileScreen
 import com.example.demonslayer.ui.theme.DemonSlayerTheme
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DemonSlayerApp(
@@ -50,6 +54,9 @@ fun DemonSlayerApp(
             composable(Screen.Home.route) {
                 HomeScreen(navigateToDetail = {})
             }
+            composable(Screen.Profile.route){
+                ProfileScreen()
+            }
 
         }
 
@@ -68,17 +75,20 @@ private fun BottomBar(
             Navigationitem(
                 title = stringResource(id = R.string.menu_home),
                 icon = Icons.Default.Home,
-                screen = Screen.Home
+                screen = Screen.Home,
+                desc = stringResource(id = R.string.home_page)
             ),
             Navigationitem(
                 title = stringResource(R.string.menu_favorite),
                 icon = Icons.Default.Favorite,
-                screen = Screen.Favorite
+                screen = Screen.Favorite,
+                desc = stringResource(id = R.string.favorite_page)
             ),
             Navigationitem(
                 title = stringResource(R.string.menu_profile),
                 icon = Icons.Default.AccountCircle,
-                screen = Screen.Profile
+                screen = Screen.Profile,
+                desc = stringResource(id = R.string.about_page)
             ),
         )
         NavigationBar {
@@ -87,7 +97,7 @@ private fun BottomBar(
                     icon = {
                         Icon(
                             imageVector = item.icon,
-                            contentDescription = item.title,
+                            contentDescription = item.desc,
                         )
                     },
                     label = { Text(item.title) },
@@ -107,6 +117,7 @@ private fun BottomBar(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Preview(showBackground = true)
 @Composable
 fun JetHeroesAppPreview() {

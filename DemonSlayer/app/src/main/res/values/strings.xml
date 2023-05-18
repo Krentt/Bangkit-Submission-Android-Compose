@@ -4,4 +4,9 @@
     <string name="menu_favorite">Favorite</string>
     <string name="menu_profile">Profile</string>
     <string name="search_hero">Search…</string>
+
+    <string name="home_page">home_page</string>
+    <string name="favorite_page">favorite_page</string>
+    <string name="about_page">about_page</string>
+    <string name="my_profile">My Profile</string>
 </resources>

@@ -27,6 +27,12 @@ class HeroesRepository {
         }
     }
 
+    fun searchHeroes(query: String): List<Hero>{
+        return heroes.filter {
+            it.name.contains(query, ignoreCase = true)
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: HeroesRepository? = null

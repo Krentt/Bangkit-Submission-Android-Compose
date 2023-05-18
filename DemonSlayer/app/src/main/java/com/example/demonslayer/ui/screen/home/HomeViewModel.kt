@@ -1,5 +1,7 @@
 package com.example.demonslayer.ui.screen.home
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.demonslayer.data.HeroesRepository
@@ -17,6 +19,9 @@ class HomeViewModel(private val repository: HeroesRepository) : ViewModel() {
     val uiState: StateFlow<UiState<List<Hero>>>
         get() = _uiState
 
+    private val _query = mutableStateOf("")
+    val query: State<String> get() = _query
+
     fun getAllHeroes() {
         viewModelScope.launch {
             repository.getAllHeroes()
@@ -27,5 +32,10 @@ class HomeViewModel(private val repository: HeroesRepository) : ViewModel() {
                     _uiState.value = UiState.Success(heroes)
                 }
         }
+    }
+
+    fun search(newQuery: String){
+        _query.value = newQuery
+        _uiState.value = UiState.Success(repository.searchHeroes(_query.value))
     }
 }

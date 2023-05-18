@@ -21,6 +21,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -45,6 +46,7 @@ fun HomeScreen(
     ),
     navigateToDetail: (Long) -> Unit,
 ) {
+    val query by viewModel.query
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
             is UiState.Loading -> {
@@ -55,7 +57,7 @@ fun HomeScreen(
             is UiState.Success -> {
                 Column {
                     Box(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
-                        SearchBar(query = "", onQueryChange = {})
+                        SearchBar(query = query, onQueryChange = viewModel::search)
                     }
                     HomeContent(
                         heroes = uiState.data,
